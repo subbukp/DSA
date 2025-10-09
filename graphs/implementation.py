@@ -12,6 +12,34 @@ def printEdge(graph: defaultdict):
             edge.append((node, adj))
     return edge
 
+def findPath(graph, start, end, path=[]):
+    '''
+    It will give a error output as it will use a single list for the whole recursion stack for path
+    Use debugger for reference
+    '''
+    path += [start] #uses same list throughout the recursion so wrong output
+    #print(path)
+    if start == end:
+        return path
+    for node in graph[start]:
+        if node not in path:
+            new_node = findPath(graph, node, end,path)
+            if new_node:
+                return new_node
+
+def find_path(graph, start, end, path=[]):
+    path = path + [start]
+    #print(path)
+    if start == end:
+        return path
+    for node in graph[start]:
+        if node not in path:
+            newpath = find_path(graph, node, end, path)
+            if newpath:
+                return newpath
+
+
+
 # declaration of graph as dictionary
 addEdge(graph,'a','c')
 addEdge(graph,'b','c')
@@ -24,4 +52,6 @@ addEdge(graph,'e','b')
 addEdge(graph,'d','c')
 addEdge(graph,'e','c')
 
-print(printEdge(graph))
+#print(printEdge(graph))
+print(findPath(graph, 'a','b'))
+print(find_path(graph, 'a','b'))
